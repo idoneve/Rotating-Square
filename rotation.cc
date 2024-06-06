@@ -13,7 +13,7 @@ struct Rotate {
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    Rect rect = { 400, 300, 30, 30 };
+    Rect rect = { 400, 300, 100, 100 };
     SDL_FPoint *points;
     SDL_FPoint *trans_points;
 
@@ -70,11 +70,9 @@ struct Rotate {
     }
 
     void update() {
-        for (int i = 0; i < rect.w * rect.h; ++i) {
-            rotate(theta, points, rect.w * rect.h);
-        }
+        rotate(theta, points, rect.w * rect.h);
 
-        theta += 0.1;
+        theta += 0.05;
 
         SDL_Delay(16);
     }
@@ -93,6 +91,9 @@ struct Rotate {
         SDL_DestroyWindow(window);
         SDL_DestroyRenderer(renderer);
         SDL_Quit();
+
+        delete[] points;
+        delete[] trans_points;
     }
 };
 
@@ -107,6 +108,8 @@ int main(int argc, char const *argv[]) {
     }
 
     r->clear();
+
+    delete r;
 
     return 0;
 }
